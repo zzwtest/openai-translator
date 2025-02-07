@@ -724,7 +724,10 @@ function Ii18nSelector({ value, onChange, onBlur }: Ii18nSelectorProps) {
         { label: 'ไทย', id: 'th' },
         { label: 'Türkçe', id: 'tr' },
     ]
-
+    useEffect(() => {
+        (i18n as any).changeLanguage(value);
+    }, [value]);
+    
     return (
         <Select
             size='compact'
