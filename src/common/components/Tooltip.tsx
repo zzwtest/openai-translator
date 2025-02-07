@@ -16,5 +16,5 @@ const Tooltip = ({ content, children, ...props }: ITooltipProps) => {
         </StatefulTooltip>
     )
 }
-
+   
 export { Tooltip }
