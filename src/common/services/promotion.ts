@@ -29,27 +29,27 @@ export interface IPromotionItem {
     version_constraint?: string
     can_never_display?: boolean
 }
-
 export interface IPromotionResponse {
     openai_api_key?: IPromotionItem[]
     settings_header?: IPromotionItem[]
 }
 
 export async function fetchPromotions(): Promise<IPromotionResponse> {
-    try {
-        const resp = await fetch(
-            `https://raw.githubusercontent.com/yetone/openai-translator-configs/main/promotions.json?ts=${Date.now()}`,
-            { cache: 'no-cache' }
-        )
-        if (!resp.ok) {
-            throw new Error(resp.statusText)
-        }
-        return resp.json()
-    } catch (error) {
-        console.error('Error fetching promotions: ', error)
+    // try {
+    //     const resp = await fetch(
+    //         `https://raw.githubusercontent.com/yetone/openai-translator-configs/main/promotions.json?ts=${Date.now()}`,
+    //         { cache: 'no-cache' }
+    //     )
+    //     if (!resp.ok) {
+    //         throw new Error(resp.statusText)
+    //     }
+    //     return resp.json()
+    // } catch (error) {
+    //     console.error('Error fetching promotions: ', error)
 
-        return {}
-    }
+    //     return {}
+    // }
+    return {}
 }
 
 export async function choicePromotionItem(items?: IPromotionItem[]) {

@@ -725,9 +725,11 @@ function Ii18nSelector({ value, onChange, onBlur }: Ii18nSelectorProps) {
         { label: 'Türkçe', id: 'tr' },
     ]
     useEffect(() => {
-        (i18n as any).changeLanguage(value);
-    }, [value]);
-    
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ;(i18n as any).changeLanguage(value)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [value])
+
     return (
         <Select
             size='compact'
@@ -1359,6 +1361,7 @@ function ProviderSelector({ value, onChange, hasPromotion }: IProviderSelectorPr
               { label: 'Moonshot', id: 'Moonshot' },
               { label: 'Groq', id: 'Groq' },
               { label: 'DeepSeek', id: 'DeepSeek' },
+              { label: 'Google翻译', id: 'GoogleTrans' },
           ] as {
               label: string
               id: Provider
