@@ -402,6 +402,7 @@ If you understand, say "yes", and then we will begin.`
         signal: query.signal,
         rolePrompt,
         commandPrompt,
+        contentPrompt,
         onMessage: async (message) => {
             await query.onMessage({ ...message, isWordMode })
         },
