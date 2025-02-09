@@ -1777,7 +1777,8 @@ export function InnerSettings({
     }, [disclaimerPromotion?.id])
 
     console.debug('render settings')
-
+    // 获取用户信息
+    const userInfo = {}
     return (
         <div
             style={{
@@ -1855,6 +1856,32 @@ export function InnerSettings({
                         </Button>
                     </div>
                 </div>
+
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        color: '#333',
+                        gap: 10,
+                        padding: '15px 25px 0 25px',
+                    }}
+                >
+                    当前账号:
+                    {Object.keys(userInfo).length === 0 ? (
+                        <button
+                            onClick={() => {
+                                /* 处理登录逻辑 */
+                                console.log('登录登录登录')
+                            }}
+                        >
+                            登录
+                        </button>
+                    ) : (
+                        userInfo.user_name
+                    )}
+                </div>
+
                 <Tabs
                     overrides={tabsOverrides}
                     activeKey={activeTab}
