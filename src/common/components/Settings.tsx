@@ -1869,14 +1869,21 @@ export function InnerSettings({
                 >
                     当前账号:
                     {Object.keys(userInfo).length === 0 ? (
-                        <button
+                        <Button
+                            size='mini'
                             onClick={() => {
                                 /* 处理登录逻辑 */
+
+                                const loginUrl = chrome.runtime.getURL('src/browser-extension/res/login.html')
+
+                                // 使用 chrome.tabs API 打开新标签页
+                                chrome.tabs.create({ url: loginUrl })
+
                                 console.log('登录登录登录')
                             }}
                         >
                             登录
-                        </button>
+                        </Button>
                     ) : (
                         userInfo.user_name
                     )}

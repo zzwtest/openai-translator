@@ -20,7 +20,16 @@ export function getManifest(browser: 'firefox' | 'chromium') {
             page: 'src/browser-extension/options/index.html',
             open_in_tab: true,
         },
-
+        // web_accessible_resources:[
+        //     {
+        //         "resources": [
+        //           "res/login.html"
+        //         ],
+        //         "matches": [
+        //           "<all_urls>"
+        //         ]
+        //       },
+        // ],
         action: {
             default_icon: 'icon.png',
             default_popup: 'src/browser-extension/popup/index.html',

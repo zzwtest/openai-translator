@@ -16,6 +16,9 @@ export default defineConfig({
         webExtension({
             manifest: getManifest('chromium'),
             useDynamicUrlWebAccessibleResources: false,
+            additionalInputs: {
+                html: ['src/browser-extension/res/login.html'],
+            },
         }),
     ],
     resolve: {
