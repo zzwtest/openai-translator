@@ -3,21 +3,26 @@ import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import '../../common/i18n.js'
 import './index.css'
+import icon from '../../common/assets/images/icon-large.png'
 import beams from '../../common/assets/images/beams.jpg'
 import * as utils from '../../common/utils'
 import { Button } from 'baseui-sd/button'
-import { Tabs, Tab } from 'baseui-sd/tabs-motion'
+import { Tabs, Tab, StyledTabList, StyledTabPanel } from 'baseui-sd/tabs-motion'
+import { Cell, Grid } from 'baseui-sd/layout-grid'
+
 import { IoSettingsOutline } from 'react-icons/io5'
+import AppConfig from '../../../package.json'
 
 import { PiTextbox } from 'react-icons/pi'
-import { TbCloudNetwork } from 'react-icons/tb'
+// import { TbCloudNetwork } from 'react-icons/tb'
 import { BsKeyboard } from 'react-icons/bs'
+import { useTranslation } from 'react-i18next'
 
 import { createUseStyles } from 'react-jss'
 import { IThemedStyleProps } from '../../common/types'
 import { useTheme } from '../../common/hooks/useTheme'
 import browser from 'webextension-polyfill'
-import { optionsPageHeaderPromotionIDKey, optionsPageOpenaiAPIKeyPromotionIDKey } from '../common'
+import { optionsPageHeaderPromotionIDKey } from '../common'
 
 const useStyles = createUseStyles({
     root: (props: IThemedStyleProps) => ({
@@ -31,7 +36,12 @@ const useStyles = createUseStyles({
         height: '100%',
     },
 })
-
+const linkStyle = {
+    color: 'inherit',
+    opacity: 0.8,
+    cursor: 'pointer',
+    outline: 'none',
+}
 const Login = () => {
     const { theme, themeType } = useTheme()
     const styles = useStyles({ theme, themeType })
@@ -42,12 +52,12 @@ const Login = () => {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const [isScrolled, setIsScrolled] = useState(window.scrollY > 0)
 
-    useEffect(() => {
-        browser.storage.local.get(optionsPageOpenaiAPIKeyPromotionIDKey).then((resp) => {
-            setOpenaiAPIKeyPromotionID(resp[optionsPageOpenaiAPIKeyPromotionIDKey])
-            browser.storage.local.remove(optionsPageOpenaiAPIKeyPromotionIDKey)
-        })
-    }, [])
+    // useEffect(() => {
+    //     browser.storage.local.get(optionsPageOpenaiAPIKeyPromotionIDKey).then((resp) => {
+    //         setOpenaiAPIKeyPromotionID(resp[optionsPageOpenaiAPIKeyPromotionIDKey])
+    //         browser.storage.local.remove(optionsPageOpenaiAPIKeyPromotionIDKey)
+    //     })
+    // }, [])
 
     useEffect(() => {
         browser.storage.local.get(optionsPageHeaderPromotionIDKey).then((resp) => {
@@ -55,6 +65,61 @@ const Login = () => {
             browser.storage.local.remove(optionsPageHeaderPromotionIDKey)
         })
     }, [])
+    const { t } = useTranslation()
+    const userInfo = {}
+    const [activeTab, setActiveTab] = useState('general')
+
+    const tabsOverrides = {
+        Root: {
+            style: {
+                '& button:hover': {
+                    background: 'transparent !important',
+                },
+            },
+        },
+        TabList: {
+            style: () => ({}),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            component: function TabsListOverride(props: any) {
+                return (
+                    <Grid behavior='fluid'>
+                        <Cell span={12}>
+                            <StyledTabList {...props} />
+                        </Cell>
+                    </Grid>
+                )
+            },
+        },
+    }
+    const tabOverrides = {
+        TabPanel: {
+            style: {
+                padding: '0px',
+            },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            component: function TabsListOverride(props: any) {
+                return (
+                    <Grid>
+                        <Cell span={[1, 2, 3]}>
+                            <StyledTabPanel {...props} />
+                        </Cell>
+                    </Grid>
+                )
+            },
+        },
+        Tab: {
+            style: {
+                'color': theme.colors.black,
+                'background': 'transparent',
+                ':hover': {
+                    background: 'rgba(255, 255, 255, 0.35) !important',
+                },
+                ':active': {
+                    background: 'rgba(255, 255, 255, 0.45) !important',
+                },
+            },
+        },
+    }
 
     return (
         <div className={styles.root}>
@@ -174,17 +239,6 @@ const Login = () => {
                             }}
                             overrides={tabOverrides}
                         />
-                        {isTauri && (
-                            <Tab
-                                title={t('Proxy')}
-                                key='proxy'
-                                artwork={() => {
-                                    return <TbCloudNetwork size={14} />
-                                }}
-                                overrides={tabOverrides}
-                            />
-                        )}
-
                         <Tab
                             title={t('Writing')}
                             key='writing'
